@@ -96,6 +96,7 @@ impl<'source> Tokenizer<'source> {
                 // look-around not supported
                 // TokenSpec::new(TokenKind::BooleanLiteral, r"^\btrue(?!\w|\$)"),
                 TokenSpec::new(TokenKind::BooleanLiteral, r"^\btrue\b"),
+                TokenSpec::new(TokenKind::NumberLiteral, r"^\d+\.\d+"),
                 TokenSpec::new(TokenKind::NumberLiteral, r"^\d+"),
                 // TODO: Support escaping quotes
                 TokenSpec::new(TokenKind::StringLiteral, "^\"[^\"]*\""),

@@ -11,7 +11,9 @@ fn main() {
         \"key1\": \"value\",
         \"key2\": null,
         \"key3\": false,
-        \"key4\": [
+        \"key4\": 123,
+        \"key5\": 123.456,
+        \"key6\": [
             \"value1\",
             \"value2\",
             \"value3\"

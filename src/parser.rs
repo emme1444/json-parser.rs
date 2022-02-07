@@ -4,7 +4,8 @@ mod tokenizer;
 use std::collections::HashMap;
 
 use self::node::{
-    ArrayNode, BooleanNode, Node, NullNode, NumberNode, ObjectNode, Span, StringNode,
+    ArrayNode, BooleanNode, Node, NullNode, NumberNode, NumberNodeValue, ObjectNode, Span,
+    StringNode,
 };
 use self::tokenizer::{Token, TokenKind, Tokenizer};
 
@@ -143,12 +144,22 @@ impl<'source> Parser<'source> {
     fn parse_number_literal(&mut self) -> Result<NumberNode, String> {
         self.consume(TokenKind::NumberLiteral).map(|token| {
             let raw = token.raw();
+            let value = if raw.contains(".") {
+                NumberNodeValue::Float(
+                    raw.to_string()
+                        .parse()
+                        .expect("could not parse number literal raw value"),
+                )
+            } else {
+                NumberNodeValue::Int(
+                    raw.to_string()
+                        .parse()
+                        .expect("could not parse number literal raw value"),
+                )
+            };
             NumberNode {
                 raw: raw.to_string(),
-                value: raw
-                    .to_string()
-                    .parse()
-                    .expect("could not parse number literal raw value"),
+                value,
                 span: *token.span(),
             }
         })

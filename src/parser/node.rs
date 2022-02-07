@@ -244,7 +244,7 @@ impl Span {
 //     fn span(&self) -> &Span;
 // }
 
-#[derive(Debug, PartialEq, Eq)]
+#[derive(Debug, PartialEq)]
 pub enum Node {
     Null(NullNode),
     Boolean(BooleanNode),
@@ -298,41 +298,47 @@ impl Node {
     }
 }
 
-#[derive(Debug, PartialEq, Eq)]
+#[derive(Debug, PartialEq)]
 pub struct NullNode {
     pub span: Span,
     pub raw: String, // this will always be "null"
 }
 
-#[derive(Debug, PartialEq, Eq)]
+#[derive(Debug, PartialEq)]
 pub struct BooleanNode {
     pub span: Span,
     pub value: bool,
     pub raw: String, // this will always be either "false" or "true"
 }
 
-#[derive(Debug, PartialEq, Eq)]
+#[derive(Debug, PartialEq)]
 pub struct NumberNode {
     pub span: Span,
-    pub value: i32, // TODO: we'll implement floats later lol
+    pub value: NumberNodeValue,
     pub raw: String,
 }
 
-#[derive(Debug, PartialEq, Eq)]
+#[derive(Debug, PartialEq)]
+pub enum NumberNodeValue {
+    Float(f64),
+    Int(i64),
+}
+
+#[derive(Debug, PartialEq)]
 pub struct StringNode {
     pub span: Span,
     pub value: String,
     pub raw: String, // this includes the quotes ("")
 }
 
-#[derive(Debug, PartialEq, Eq)]
+#[derive(Debug, PartialEq)]
 pub struct ArrayNode {
     pub span: Span,
     pub value: Vec<Node>, // TODO: does this need to be Box<Node>?
     pub raw: String,      // this includes the square brackets ([])
 }
 
-#[derive(Debug, PartialEq, Eq)]
+#[derive(Debug, PartialEq)]
 pub struct ObjectNode {
     pub span: Span,
     // pub value: Vec<ObjectEntry>, // TODO: does this need to be Box<Node>?
